@@ -14,27 +14,33 @@ namespace CW1_WebAppUI_8408.Controllers
 {
     public class HomeController : Controller
     {
-        public async Task<ActionResult> Index()
-        {
-            //Hosted web API REST Service base url
-            string Baseurl = "http://localhost:57719/";
-            List<Car> CarInfo = new List<Car>();
-            using (var client = new HttpClient())
+            // GET: Home
+            public async Task<ActionResult> Index()
             {
-                //Passing service base url
-                client.BaseAddress = new Uri(Baseurl);
-                client.DefaultRequestHeaders.Clear();
-                //Define request data format
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                 HttpResponseMessage Res = await client.GetAsync("api/Product");
-            if (Res.IsSuccessStatusCode)
+                //Hosted web API REST Service base url
+                string Baseurl = "https://localhost:5001/";
+                List<Car> CarInfo = new List<Car>();
+                using (var client = new HttpClient())
                 {
-                    var PrResponse = Res.Content.ReadAsStringAsync().Result;
-                     CarInfo = JsonConvert.DeserializeObject<List<Car>>(PrResponse);
+                    //Passing service base url
+                    client.BaseAddress = new Uri(Baseurl);
+                    client.DefaultRequestHeaders.Clear();
+                    //Define request data format
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    //Sending request to find web api REST service resource GetAllEmployees using HttpClient
+                     HttpResponseMessage Res = await client.GetAsync("api/Product");
+                    //Checking the response is successful or not which is sent using HttpClient
+                if (Res.IsSuccessStatusCode)
+                    {
+                        //Storing the response details recieved from web api
+                        var Response = Res.Content.ReadAsStringAsync().Result;
+                        //Deserializing the response recieved from web api and storing into the Product list
+                         CarInfo = JsonConvert.DeserializeObject<List<Car>>(Response);
+                    }
+                    //returning the Product list to view
+                    return View(CarInfo);
                 }
-                //returning the Product list to view
-                return View(CarInfo);
             }
+
         }
     }
-}

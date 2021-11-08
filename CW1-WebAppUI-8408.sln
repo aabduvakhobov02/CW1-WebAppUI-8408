@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CW1-WebAppUI-8408", "CW1-WebAppUI-8408\CW1-WebAppUI-8408.csproj", "{B860BB51-21C3-408A-A157-9A6B95249F13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CW1-WebAppUI-8408", "CW1-WebAppUI-8408\CW1-WebAppUI-8408.csproj", "{B860BB51-21C3-408A-A157-9A6B95249F13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
