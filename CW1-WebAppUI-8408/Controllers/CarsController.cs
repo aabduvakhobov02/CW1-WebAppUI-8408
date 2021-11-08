@@ -16,6 +16,7 @@ namespace CW1_WebAppUI_8408.Controllers
     public class CarsController : Controller
     {
         private readonly CW1_WebAppUI_8408Context _context;
+        private string Baseurl = "https://localhost:5001/";
 
         public CarsController(CW1_WebAppUI_8408Context context)
         {
@@ -33,19 +34,15 @@ namespace CW1_WebAppUI_8408.Controllers
                 //Passing service base url
                 client.BaseAddress = new Uri(Baseurl);
                 client.DefaultRequestHeaders.Clear();
-                //Define request data format
+
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //Sending request to find web api REST service resource GetAllEmployees using HttpClient
+
                 HttpResponseMessage Res = await client.GetAsync("api/Product");
-                //Checking the response is successful or not which is sent using HttpClient
                 if (Res.IsSuccessStatusCode)
                 {
-                    //Storing the response details recieved from web api
                     var Response = Res.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Product list
                     CarInfo = JsonConvert.DeserializeObject<List<Car>>(Response);
                 }
-                //returning the Product list to view
                 return View(CarInfo);
             }
         }
@@ -53,39 +50,69 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            string Baseurl = "https://localhost:5001/";
+            Car cars = null;
+            using (var client = new HttpClient())
             {
-                return NotFound();
-            }
+                client.BaseAddress = new Uri(Baseurl);
+            HttpResponseMessage Res = await client.GetAsync("api/Product/" + id);
 
-            var car = await _context.Car
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (car == null)
+            if (Res.IsSuccessStatusCode)
             {
-                return NotFound();
-            }
+                var PrResponse = Res.Content.ReadAsStringAsync().Result;
 
-            return View(car);
+                cars = JsonConvert.DeserializeObject<Car>(PrResponse);
+            }
+            else
+                ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+        }
+
+            return View(cars);
         }
 
         // GET: Cars/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
+            List<Category> CarInfo = new List<Category>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await client.GetAsync("api/Category");
+                //Checking the response is successful or not which is sent using HttpClient
+                if (Res.IsSuccessStatusCode)
+                {
+                    //Storing the response details recieved from web api
+                    var Response = Res.Content.ReadAsStringAsync().Result;
+                    //Deserializing the response recieved from web api and storing into the Product list
+                    CarInfo = JsonConvert.DeserializeObject<List<Category>>(Response);
+                }
+            }
+            ViewData["ProductCategoryId"] = new SelectList(CarInfo, "Id", "Name");
             return View();
         }
+                
 
         // POST: Cars/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price")] Car car)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,ProductCategoryId")] Car car)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(car);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // TODO: Add update logic here
+                using (var client = new HttpClient())
+                {
+                    var randomNumber = new Random();
+                    car.Id = randomNumber.Next(150);
+                    client.BaseAddress = new Uri(Baseurl);
+                    var postTask = await client.PostAsJsonAsync<Car>("api/Product", car);
+                    if (postTask.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
             }
             return View(car);
         }
@@ -97,8 +124,39 @@ namespace CW1_WebAppUI_8408.Controllers
             {
                 return NotFound();
             }
+            List<Category> CarInfo = new List<Category>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage Res = await client.GetAsync("api/Category");
+                //Checking the response is successful or not which is sent using HttpClient
+                if (Res.IsSuccessStatusCode)
+                {
+                    //Storing the response details recieved from web api
+                    var Response = Res.Content.ReadAsStringAsync().Result;
+                    //Deserializing the response recieved from web api and storing into the Product list
+                    CarInfo = JsonConvert.DeserializeObject<List<Category>>(Response);
+                }
+            }
+    
 
-            var car = await _context.Car.FindAsync(id);
+            Car car = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                HttpResponseMessage Res = await client.GetAsync("api/Product/" + id);
+                if (Res.IsSuccessStatusCode)
+                {
+                    var Response = Res.Content.ReadAsStringAsync().Result;
+                    car = JsonConvert.DeserializeObject<Car>(Response);
+                }
+                else
+                    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+            }
+            ViewData["ProductCategoryId"] = new SelectList(CarInfo, "Id", "Name", car.ProductCategoryId);
             if (car == null)
             {
                 return NotFound();
@@ -106,12 +164,11 @@ namespace CW1_WebAppUI_8408.Controllers
             return View(car);
         }
 
+
         // POST: Cars/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,ProductCategoryId")] Car car)
         {
             if (id != car.Id)
             {
@@ -122,8 +179,32 @@ namespace CW1_WebAppUI_8408.Controllers
             {
                 try
                 {
-                    _context.Update(car);
-                    await _context.SaveChangesAsync();
+                    // TODO: Add update logic here
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri(Baseurl);
+                        HttpResponseMessage Res = await client.GetAsync("api/Product/" + id);
+                        Car cars = null;
+                        //Checking the response is successful or not which is sent using HttpClient
+                        if (Res.IsSuccessStatusCode)
+                        {
+                            //Storing the response details recieved from web api
+                            var Response = Res.Content.ReadAsStringAsync().Result;
+                            //Deserializing the response recieved from web api and storing into the Product list
+                            cars = JsonConvert.DeserializeObject<Car>(Response);
+                        }
+                        //HTTP POST
+                        var postTask = client.PutAsJsonAsync<Car>("api/Product/" + car.Id, car);
+                        postTask.Wait();
+                        var result = postTask.Result;
+                        if (result.IsSuccessStatusCode)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                    }
+
+                    return RedirectToAction("Index");
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -136,22 +217,34 @@ namespace CW1_WebAppUI_8408.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(car);
         }
 
+
+
         // GET: Cars/Delete/5
+        //The function 
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            Car car = null;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                HttpResponseMessage Res = await client.GetAsync("api/Product/" + id);
 
-            var car = await _context.Car
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (car == null)
+                if (Res.IsSuccessStatusCode)
+                {
+                    var PrResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    car = JsonConvert.DeserializeObject<Car>(PrResponse);
+                }
+            }
+                if (car == null)
             {
                 return NotFound();
             }
@@ -164,15 +257,27 @@ namespace CW1_WebAppUI_8408.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var car = await _context.Car.FindAsync(id);
-            _context.Car.Remove(car);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            string Baseurl = "https://localhost:5001/";
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                HttpResponseMessage Res = await client.DeleteAsync("api/Product/" + id);
+
+                if (Res.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
+            }
         }
 
         private bool CarExists(int id)
         {
             return _context.Car.Any(e => e.Id == id);
         }
+
     }
 }
