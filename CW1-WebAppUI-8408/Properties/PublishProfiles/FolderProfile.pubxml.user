@@ -5,6 +5,6 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\abduvakhobov_a\Documents\6BIS3\DSCC\CW1\CW1-WebAppUI-8408\CW1-WebAppUI-8408\bin\Release\net5.0\publish\</_PublishTargetUrl>
-    <History>True|2021-11-08T22:53:09.2967875Z;True|2021-11-09T03:51:42.1710363+05:00;</History>
+    <History>True|2021-11-09T16:21:29.8607075Z;True|2021-11-09T03:53:09.2967875+05:00;True|2021-11-09T03:51:42.1710363+05:00;</History>
   </PropertyGroup>
 </Project>
