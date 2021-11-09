@@ -1,0 +1,20 @@
+version: 0.0
+os: windows
+files:
+  - source: CW1-WebAppUI-8408/bin/net5.0/publish
+    destination: C:\webApps\CW1-WebAppUI-8408
+  - source: scripts/deletewebsite.ps1
+    destination: c:\temp
+  - source: scripts/installwebsite.ps1
+    destination: c:\temp
+  - source: scripts/deletewebsite.bat
+    destination: c:\temp
+  - source: scripts/installwebsite.bat
+    destination: c:\temp
+hooks:
+  ApplicationStop:
+    - location: scripts/deletewebsite.bat
+      timeout: 300
+  ApplicationStart:
+    - location: scripts/installwebsite.bat
+      timeout: 300

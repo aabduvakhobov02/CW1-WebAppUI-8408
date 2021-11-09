@@ -1,0 +1,10 @@
+is_global = true
+build_property.TargetFramework = net5.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.PublishSingleFile = 
+build_property.IncludeAllContentForSelfExtract = 
+build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+build_property.RootNamespace = CW1_WebAppUI_8408
+build_property.ProjectDir = C:\Users\abduvakhobov_a\Documents\6BIS3\DSCC\CW1\CW1-WebAppUI-8408\CW1-WebAppUI-8408\

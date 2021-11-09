@@ -16,7 +16,7 @@ namespace CW1_WebAppUI_8408.Controllers
     public class CarsController : Controller
     {
         private readonly CW1_WebAppUI_8408Context _context;
-        private string Baseurl = "https://localhost:5001/";
+        private string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
 
         public CarsController(CW1_WebAppUI_8408Context context)
         {
@@ -27,7 +27,7 @@ namespace CW1_WebAppUI_8408.Controllers
         public async Task<IActionResult> Index()
         {
             //Hosted web API REST Service base url
-            string Baseurl = "https://localhost:5001/";
+            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             List<Car> CarInfo = new List<Car>();
             using (var client = new HttpClient())
             {
@@ -50,7 +50,7 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            string Baseurl = "https://localhost:5001/";
+            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             Car cars = null;
             using (var client = new HttpClient())
             {
@@ -257,7 +257,7 @@ namespace CW1_WebAppUI_8408.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            string Baseurl = "https://localhost:5001/";
+            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);

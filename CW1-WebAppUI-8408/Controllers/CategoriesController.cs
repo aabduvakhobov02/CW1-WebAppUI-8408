@@ -18,7 +18,7 @@ namespace CW1_WebAppUI_8408.Controllers
     {
         private readonly CW1_WebAppUI_8408Context _context;
 
-        string Baseurl = "https://localhost:5001/";
+        string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
 
         public CategoriesController(CW1_WebAppUI_8408Context context)
         {
@@ -28,7 +28,7 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            string Baseurl = "https://localhost:5001/";
+            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             List<Category> CategoryInfo = new List<Category>();
             using (var client = new HttpClient())
             {
@@ -51,7 +51,7 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            string Baseurl = "https://localhost:5001/";
+            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             Category cat = null;
             using (var client = new HttpClient())
             {
@@ -105,7 +105,7 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            string Baseurl = "https://localhost:5001/";
+            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             Category cat = null;
             using (var client = new HttpClient())
             {
@@ -134,7 +134,7 @@ namespace CW1_WebAppUI_8408.Controllers
             try
             {
                 // TODO: Add update logic here
-                string Baseurl = "https://localhost:5001/";
+                string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(Baseurl);
@@ -169,7 +169,7 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            string Baseurl = "https://localhost:5001/";
+            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             Category cat = null;
             using (var client = new HttpClient())
             {
@@ -195,7 +195,7 @@ namespace CW1_WebAppUI_8408.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            string Baseurl = "https://localhost:5001/";
+            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);

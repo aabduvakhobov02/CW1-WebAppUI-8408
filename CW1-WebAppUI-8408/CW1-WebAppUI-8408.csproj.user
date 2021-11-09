@@ -15,6 +15,7 @@
     <WebStackScaffolding_DbContextTypeFullName>CW1_WebAppUI_8408.Data.CW1_WebAppUI_8408Context</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
+    <NameOfLastUsedPublishProfile>C:\Users\abduvakhobov_a\Documents\6BIS3\DSCC\CW1\CW1-WebAppUI-8408\CW1-WebAppUI-8408\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
