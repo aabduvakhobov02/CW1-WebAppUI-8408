@@ -1,7 +1,7 @@
 version: 0.0
 os: windows
 files:
-  - source: CW1-WebAppUI-8408/bin/net5.0/publish
+  - source: CW1-WebAppUI-8408/bin/Release/net5.0/publish
     destination: C:\webApps\CW1-WebAppUI-8408
   - source: scripts/deletewebsite.ps1
     destination: c:\temp
