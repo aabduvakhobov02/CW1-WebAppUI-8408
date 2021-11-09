@@ -18,7 +18,7 @@ namespace CW1_WebAppUI_8408.Controllers
     {
         private readonly CW1_WebAppUI_8408Context _context;
 
-        private string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
+        private string Baseurl = "http://ip-172-31-16-50.ec2.internal:5000/";
 
         public CategoriesController(CW1_WebAppUI_8408Context context)
         {
