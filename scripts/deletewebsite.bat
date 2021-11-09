@@ -1,5 +1,3 @@
-ines (6 sloc)  429 Bytes
-   
 %SystemRoot%\sysnative\WindowsPowerShell\v1.0\powershell.exe -command "Set-ExecutionPolicy Unrestricted -Force"
 
 
