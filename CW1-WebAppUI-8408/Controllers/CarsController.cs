@@ -27,7 +27,6 @@ namespace CW1_WebAppUI_8408.Controllers
         public async Task<IActionResult> Index()
         {
             //Hosted web API REST Service base url
-            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             List<Car> CarInfo = new List<Car>();
             using (var client = new HttpClient())
             {
@@ -48,9 +47,9 @@ namespace CW1_WebAppUI_8408.Controllers
         }
 
         // GET: Cars/Details/5
+        // Details page view
         public async Task<IActionResult> Details(int? id)
         {
-            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             Car cars = null;
             using (var client = new HttpClient())
             {
@@ -71,6 +70,7 @@ namespace CW1_WebAppUI_8408.Controllers
         }
 
         // GET: Cars/Create
+        // Create new car page view
         public async Task<IActionResult> CreateAsync()
         {
             List<Category> CarInfo = new List<Category>();
@@ -95,6 +95,7 @@ namespace CW1_WebAppUI_8408.Controllers
                 
 
         // POST: Cars/Create
+        // Cars create functionality
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,ProductCategoryId")] Car car)
@@ -104,6 +105,7 @@ namespace CW1_WebAppUI_8408.Controllers
                 // TODO: Add update logic here
                 using (var client = new HttpClient())
                 {
+                    //randomNumber creates random number for creating id
                     var randomNumber = new Random();
                     car.Id = randomNumber.Next(150);
                     client.BaseAddress = new Uri(Baseurl);
@@ -118,6 +120,7 @@ namespace CW1_WebAppUI_8408.Controllers
         }
 
         // GET: Cars/Edit/5
+        // Edit existing car page view
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -140,10 +143,8 @@ namespace CW1_WebAppUI_8408.Controllers
                     CarInfo = JsonConvert.DeserializeObject<List<Category>>(Response);
                 }
             }
-    
 
             Car car = null;
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
@@ -166,6 +167,7 @@ namespace CW1_WebAppUI_8408.Controllers
 
 
         // POST: Cars/Edit/5
+        // Editing functionality
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,ProductCategoryId")] Car car)
@@ -224,7 +226,7 @@ namespace CW1_WebAppUI_8408.Controllers
 
 
         // GET: Cars/Delete/5
-        //The function 
+        // Deleting car page view
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -253,11 +255,11 @@ namespace CW1_WebAppUI_8408.Controllers
         }
 
         // POST: Cars/Delete/5
+        // Deleting functionality
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);

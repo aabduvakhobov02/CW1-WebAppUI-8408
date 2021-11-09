@@ -18,7 +18,7 @@ namespace CW1_WebAppUI_8408.Controllers
     {
         private readonly CW1_WebAppUI_8408Context _context;
 
-        string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
+        private string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
 
         public CategoriesController(CW1_WebAppUI_8408Context context)
         {
@@ -28,7 +28,6 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             List<Category> CategoryInfo = new List<Category>();
             using (var client = new HttpClient())
             {
@@ -51,7 +50,6 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             Category cat = null;
             using (var client = new HttpClient())
             {
@@ -78,8 +76,6 @@ namespace CW1_WebAppUI_8408.Controllers
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description")] Category category)
@@ -105,7 +101,6 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             Category cat = null;
             using (var client = new HttpClient())
             {
@@ -126,15 +121,11 @@ namespace CW1_WebAppUI_8408.Controllers
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public async Task<ActionResult> Edit(int id, Category category)
         {
             try
             {
-                // TODO: Add update logic here
-                string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(Baseurl);
@@ -169,7 +160,6 @@ namespace CW1_WebAppUI_8408.Controllers
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             Category cat = null;
             using (var client = new HttpClient())
             {
@@ -195,7 +185,6 @@ namespace CW1_WebAppUI_8408.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            string Baseurl = "http://ec2-54-226-153-32.compute-1.amazonaws.com:5000/";
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
@@ -210,11 +199,6 @@ namespace CW1_WebAppUI_8408.Controllers
                     return View();
                 }
             }
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return _context.Category.Any(e => e.Id == id);
         }
     }
 }
